@@ -1,10 +1,10 @@
 use axum::{
-    response::{Html, IntoResponse}, routing::{get}, Router
+    response::{Html}, routing::{get}, Router
 };
 
 #[tokio::main]
 async fn main(){
-    let app = Router::new().route("/", handler_hello());
+    let app = Router::new().route("/", get(handler_hello));
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:4000").await.unwrap();
 
@@ -14,5 +14,5 @@ async fn main(){
 async fn handler_hello() -> Html<&'static str>{
     println!("->> {:<12} - handler_hello", "HANDLER");
 
-    Html("Hello im Otto")
+    Html("<h1>Hello, Axum!</h1><p>This is some HTML content.</p>")
 }
